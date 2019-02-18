@@ -208,3 +208,6 @@ License
 
 This document is released on [Creative Commons Attribution-ShareAlike 4.0
 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+
+[BERT]: http://bert-rpc.org
+[ETF]: http://erlang.org/doc/apps/erts/erl_ext_dist.html
