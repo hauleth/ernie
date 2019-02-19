@@ -109,7 +109,7 @@ Specification
 
     - "Short" arbitrary long signed integers (up to 2040-bit)
 
-            0       1       2       3     ...     N-3
+            0       1       2       3     ...     N+3
             +-------+-------+-------+------+------+
             | 110   | N     | Sign  | Data        |
             +-------+-------+-------+------+------+
@@ -120,7 +120,7 @@ Specification
 
     - "Long" arbitrary long signed integers (from 2041 to 524 288-bit long)
 
-            0       1       2       3       4     ...     N-4
+            0       1       2       3       4     ...     N+4
             +-------+-------+-------+-------+------+------+
             | 111   | N             | Sign  | Data        |
             +-------+-------+-------+-------+------+------+
@@ -143,14 +143,14 @@ Specification
 
     - Tuples up to 255 elements
 
-            0       1       2       ...       N
+            0       1       2       ...       N+2
             +-------+-------+--------+--------+
             | 104   | Arity | Data ...        |
             +-------+-------+--------+--------+
 
     - Tuples up to 4 294 967 295 elements
 
-            0       1       2        3        4        5       ...       N
+            0       1       2        3        4        5       ...       N+5
             +-------+-------+--------+--------+--------+--------+--------+
             | 105   | Arity                            | Data ...        |
             +-------+-------+--------+--------+--------+--------+--------+
@@ -160,33 +160,43 @@ Specification
 
 5. List
 
-        0       1       2       3       4       5      ...      N       N+1
-        +-------+-------+-------+-------+-------+-------+-------+-------+
-        | 108   | Arity                         | Data ...      | 106   |
-        +-------+-------+-------+-------+-------+-------+-------+-------+
+    - Byte list
 
-    With special case for empty list:
+            0       1       2       3      ...      N+3
+            +-------+-------+-------+-------+-------+
+            | 107   | N             | Data ...      |
+            +-------+-------+-------+-------+-------+
 
-        0       1
-        +-------+
-        | 106   |
-        +-------+
+        This is optimisation for lists that contains only values in range
+        0..255, inclusive.
 
-    Where `Arity` is big-endian unsigned 32-bit integer declaring amount
-    of elements in `Data`.
+    - General list
+
+            0       1       2       3       4       5      ...      N+5     N+6
+            +-------+-------+-------+-------+-------+-------+-------+-------+
+            | 108   | Arity                         | Data ...      | 106   |
+            +-------+-------+-------+-------+-------+-------+-------+-------+
+
+        Where `Arity` is big-endian unsigned 32-bit integer declaring amount
+        of elements in `Data`.
+
+    - Empty list
+
+            0       1
+            +-------+
+            | 106   |
+            +-------+
 
 6. Binary
 
-        0       1       2       3       4       5      ...      N-5
+        0       1       2       3       4       5      ...      N+5
         +-------+-------+-------+-------+-------+-------+-------+
         | 109   | N                             | Data ...      |
         +-------+-------+-------+-------+-------+-------+-------+
 
-    Where `N` is length of the `Data` in bytes.
-
 7. Map
 
-        0       1       2       3       4       5      ...      N
+        0       1       2       3       4       5      ...      N+5
         +-------+-------+-------+-------+-------+-------+-------+
         | 116   | Arity                         | Data ...      |
         +-------+-------+-------+-------+-------+-------+-------+
@@ -200,8 +210,7 @@ Open questions
 --------------
 
 1. Should we support atoms?
-2. Should we support byte lists (aka Erlang strings)?
-3. Should we allow defining improper lists?
+2. Should we allow defining improper lists?
 
 License
 -------
@@ -211,3 +220,4 @@ International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
 [BERT]: http://bert-rpc.org
 [ETF]: http://erlang.org/doc/apps/erts/erl_ext_dist.html
+[bcp14]: https://tools.ietf.org/html/bcp14
