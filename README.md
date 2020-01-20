@@ -1,13 +1,13 @@
-BERT - Next Generation
+Ernie
 ======================
 
 Simple binary data exchange format that is based on [External Term Format][ETF]
-in Erlang.  This is update on [BERT][] which is a little bit outdated right now.
+in Erlang. This is update on [BERT][] which is a little bit outdated right now.
 
 ### Name
 
-BERT-NG is a temporary name before I find better name (probably Trekkie joke),
-if you have an idea, then we are happy to hear you out.
+Ernie is fun over the original BERT name, from the Sesame Street Bert & Ernie
+couple.
 
 ### RPC
 
@@ -51,7 +51,8 @@ Specification
 
     IEEE 754 double precision floats.
 
-    Implementation MUST support full IEEE 754 double precision floating point
+    Implementation MUST support all non-NaN, non-infinite, non-subnormal values
+    described in IEEE 754 binary64 spec. Implementations SHOULD NOT encode these
     values.
 
 3. Tuple
@@ -114,7 +115,7 @@ Specification
             | 110   | N     | Sign  | Data        |
             +-------+-------+-------+------+------+
 
-        `N` is big-endian 16-bit unsigned integer. `Data` represents big-endian
+        `N` is big-endian 16-bit unsigned integer. `Data` represents little-endian
         encoded `N` byte long integer. `Sign` is `0` for positive integer
         and `1` for negative one.
 
@@ -125,7 +126,7 @@ Specification
             | 111   | N             | Sign  | Data        |
             +-------+-------+-------+-------+------+------+
 
-        `N` is big-endian 16-bit unsigned integer. `Data` represents big-endian
+        `N` is big-endian 16-bit unsigned integer. `Data` represents little-endian
         encoded `N` byte long integer. `Sign` is `0` for positive integer
         and `1` for negative one.
 
