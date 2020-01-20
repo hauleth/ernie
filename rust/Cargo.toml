@@ -1,0 +1,9 @@
+[package]
+name = "ernie"
+version = "0.1.0"
+authors = ["Łukasz Niemier <lukasz@niemier.pl>"]
+edition = "2018"
+build = "build.rs"
+
+[dependencies]
+byteorder = "~1.0"
